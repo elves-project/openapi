@@ -134,7 +134,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>elves-openapi</finalName>
+		<finalName>elves-openapi-${version}-release</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/java</directory>
