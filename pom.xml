@@ -5,7 +5,7 @@
 	<groupId>cn.gyyx</groupId>
 	<artifactId>elves-openapi</artifactId>
 	<packaging>war</packaging>
-	<version>0.3.2</version>
+	<version>0.3.3</version>
 	<name>elves-openapi</name>
 	<url>http://maven.apache.org</url>
 

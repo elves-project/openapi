@@ -5,6 +5,7 @@ import javax.servlet.ServletContextListener;
 
 import org.apache.log4j.Logger;
 
+import cn.gyyx.elves.util.ExceptionUtil;
 import cn.gyyx.elves.util.mq.PropertyLoader;
 import cn.gyyx.elves.util.zk.ZookeeperExcutor;
 
@@ -19,14 +20,31 @@ public class zookeeperEnrollListener implements ServletContextListener {
 	private static final Logger LOG = Logger.getLogger(zookeeperEnrollListener.class);
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		//连接zookeeper，注册临时节点
-		ZookeeperExcutor zke=new ZookeeperExcutor(PropertyLoader.ZOOKEEPER_HOST,
-				PropertyLoader.ZOOKEEPER_OUT_TIME, PropertyLoader.ZOOKEEPER_OUT_TIME);
-		String nodeName=zke.createNode(PropertyLoader.ZOOKEEPER_ROOT+"/Openapi/", "");
-		if(null!=nodeName){
-			zke.addListener(PropertyLoader.ZOOKEEPER_ROOT+"/Openapi/", "");
+		if("true".equalsIgnoreCase(PropertyLoader.ZOOKEEPER_ENABLED)){
+			try {
+				ZookeeperExcutor zke=new ZookeeperExcutor(PropertyLoader.ZOOKEEPER_HOST,
+						PropertyLoader.ZOOKEEPER_OUT_TIME, PropertyLoader.ZOOKEEPER_OUT_TIME);
+
+				//创建模块根节点
+				if(null==zke.getClient().checkExists().forPath(PropertyLoader.ZOOKEEPER_ROOT)){
+					zke.getClient().create().creatingParentsIfNeeded().forPath(PropertyLoader.ZOOKEEPER_ROOT);
+				}
+				if(null==zke.getClient().checkExists().forPath(PropertyLoader.ZOOKEEPER_ROOT+"/openapi")){
+					zke.getClient().create().creatingParentsIfNeeded().forPath(PropertyLoader.ZOOKEEPER_ROOT+"/openapi");
+				}
+
+				String nodeName=zke.createNode(PropertyLoader.ZOOKEEPER_ROOT+"/openapi/", "");
+				if(null!=nodeName){
+					zke.addListener(PropertyLoader.ZOOKEEPER_ROOT+"/openapi/", "");
+					LOG.info("register zookeeper openapi node success");
+				}
+			}catch (Exception e){
+				LOG.error("register zookeeper openapi node fail , msg:"+ ExceptionUtil.getStackTraceAsString(e));
+			}
+
 		}
-		LOG.info("regster zookeeper node success...");
+		
+		
 	}
 	
 	@Override

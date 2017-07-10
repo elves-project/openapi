@@ -21,6 +21,7 @@ public class PropertyLoader {
 	private static Properties properties = new Properties();
 	private static InputStream is = null;
 	
+	public static String ZOOKEEPER_ENABLED;
 	public static String ZOOKEEPER_HOST;
 	public static int ZOOKEEPER_OUT_TIME;
 	public static String ZOOKEEPER_ROOT;
@@ -43,6 +44,7 @@ public class PropertyLoader {
 			is = PropertyLoader.class.getResourceAsStream("/conf.properties");
 			properties.load(is);
 			
+			ZOOKEEPER_ENABLED=properties.getProperty("zookeeper.enabled");
 			ZOOKEEPER_HOST = properties.getProperty("zookeeper.host");
     		ZOOKEEPER_OUT_TIME =Integer.parseInt(properties.getProperty("zookeeper.outTime"));
     		ZOOKEEPER_ROOT = properties.getProperty("zookeeper.root");
