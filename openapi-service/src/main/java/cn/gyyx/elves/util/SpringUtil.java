@@ -12,7 +12,10 @@ import org.springframework.context.ApplicationContext;
 public class SpringUtil {
 
 	public static ApplicationContext app=null;
-	
+
+	/**conf.properties文件的目录地址*/
+	public static String PROPERTIES_CONFIG_PATH=null;
+
 	/**
 	 * @Title: getBean
 	 * @Description: get bean by name

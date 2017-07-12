@@ -1,9 +1,11 @@
 package cn.gyyx.elves.util.mq;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import cn.gyyx.elves.util.SpringUtil;
 import org.apache.log4j.Logger;
 
 import cn.gyyx.elves.util.ExceptionUtil;
@@ -41,7 +43,7 @@ public class PropertyLoader {
 	
 	static {
 		try {
-			is = PropertyLoader.class.getResourceAsStream("/conf.properties");
+			is = is = new FileInputStream(SpringUtil.PROPERTIES_CONFIG_PATH);;
 			properties.load(is);
 			
 			ZOOKEEPER_ENABLED=properties.getProperty("zookeeper.enabled");

@@ -3,6 +3,8 @@ package cn.gyyx.openapi.listener;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import cn.gyyx.elves.util.SpringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import cn.gyyx.elves.util.ExceptionUtil;
@@ -20,6 +22,14 @@ public class zookeeperEnrollListener implements ServletContextListener {
 	private static final Logger LOG = Logger.getLogger(zookeeperEnrollListener.class);
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
+		//设置conf.properties 文件路径
+		String openapiPath=System.getProperty("OPENAPI_PATH");
+		if(StringUtils.isBlank(openapiPath)){
+			throw new RuntimeException("get system properties fail,key is opeanapi-path");
+		}
+		SpringUtil.PROPERTIES_CONFIG_PATH=openapiPath+"/conf/conf.properties";
+		LOG.info("conf.properties path :"+SpringUtil.PROPERTIES_CONFIG_PATH);
+
 		if("true".equalsIgnoreCase(PropertyLoader.ZOOKEEPER_ENABLED)){
 			try {
 				ZookeeperExcutor zke=new ZookeeperExcutor(PropertyLoader.ZOOKEEPER_HOST,
