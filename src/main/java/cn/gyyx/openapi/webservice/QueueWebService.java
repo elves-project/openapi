@@ -197,11 +197,11 @@ public class QueueWebService{
 			return JSON.toJSONString(result, JsonFilter.filter);
 		}
 		if(!ValidateUtil.validateIpAddress(ip)) {
-			result.put("error", Errorcode.ERR403_2.getValue());
+			result.put("error", Errorcode.ERR403_1.getValue());
 			return JSON.toJSONString(result, JsonFilter.filter);
 		}
 		if(StringUtils.isNotBlank(param) && !ValidateUtil.validateJson(param)){
-			result.put("error", Errorcode.ERR403_1.getValue());
+			result.put("error", Errorcode.ERR403_2.getValue());
 			return JSON.toJSONString(result, JsonFilter.filter);
 		}
 		if(StringUtils.isNotBlank(timeout) && !ValidateUtil.validateNumber(timeout)){
