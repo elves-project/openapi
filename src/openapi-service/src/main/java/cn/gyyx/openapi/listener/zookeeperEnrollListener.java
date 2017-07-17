@@ -11,6 +11,8 @@ import cn.gyyx.elves.util.ExceptionUtil;
 import cn.gyyx.elves.util.mq.PropertyLoader;
 import cn.gyyx.elves.util.zk.ZookeeperExcutor;
 
+import java.io.File;
+
 /**
  * @ClassName: zookeeperEnrollListener
  * @Description: web 启动运行，注册zookeeper 临时节点
@@ -23,12 +25,10 @@ public class zookeeperEnrollListener implements ServletContextListener {
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 		//设置conf.properties 文件路径
-		String openapiPath=System.getProperty("OPENAPI_PATH");
-		if(StringUtils.isBlank(openapiPath)){
-			throw new RuntimeException("get system properties fail,key is opeanapi-path");
-		}
-		SpringUtil.PROPERTIES_CONFIG_PATH=openapiPath+"/conf/conf.properties";
-		LOG.info("conf.properties path :"+SpringUtil.PROPERTIES_CONFIG_PATH);
+//		String openapiPath=System.getProperty("OPENAPI_PATH");
+//		if(StringUtils.isBlank(openapiPath)){
+//			throw new RuntimeException("get system properties fail,key is opeanapi-path");
+//		}
 
 		if("true".equalsIgnoreCase(PropertyLoader.ZOOKEEPER_ENABLED)){
 			try {

@@ -4,6 +4,7 @@ package cn.gyyx.openapi.entrance;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
@@ -24,7 +25,7 @@ public class ProgramEntrance {
      * 启动jetty服务，加载server.war
      */
     public static void startJettyServer(String path) throws  Exception{
-        String configPath=path+"/conf/conf.properties";
+        String configPath=path+ File.separator+"conf"+File.separator+"conf.properties";
         InputStream is = new FileInputStream(configPath);;
         Properties properties =new Properties();
         properties.load(is);
@@ -33,7 +34,7 @@ public class ProgramEntrance {
         Server server = new Server(serverPort);
         WebAppContext context = new WebAppContext();
         context.setContextPath("/openapi");
-        context.setWar(path+"/openapi-service/target/service.war");
+        context.setWar(path+"/src/openapi-service/target/service.war");
         server.setHandler(context);
         server.start();
         server.join();

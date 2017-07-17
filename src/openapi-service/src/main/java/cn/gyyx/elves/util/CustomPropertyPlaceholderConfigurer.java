@@ -1,5 +1,6 @@
 package cn.gyyx.elves.util;
 
+import java.io.File;
 import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
@@ -29,7 +30,7 @@ public class CustomPropertyPlaceholderConfigurer extends PropertyPlaceholderConf
 		String openapiPath=System.getProperty("OPENAPI_PATH");
 		LOG.info("get openapi path :" +openapiPath);
 		//初始化，加载  {path}/conf.property 的配置文件
-		Resource location=new FileSystemResource(openapiPath+"/conf/conf.properties");
+		Resource location=new FileSystemResource(openapiPath+ File.separator+"conf"+File.separator+"conf.properties");
 		this.locations = new Resource[]{location};
 		super.setLocation(location);
 	}
