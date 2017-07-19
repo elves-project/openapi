@@ -1,38 +1,22 @@
 package cn.gyyx.openapi.filter;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-
+import cn.gyyx.elves.util.ExceptionUtil;
+import cn.gyyx.elves.util.MD5Utils;
+import cn.gyyx.elves.util.mq.MessageProducer;
+import cn.gyyx.elves.util.mq.PropertyLoader;
+import cn.gyyx.openapi.enums.Errorcode;
 import cn.gyyx.openapi.util.ValidateUtil;
-
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import cn.gyyx.elves.util.ExceptionUtil;
-import cn.gyyx.elves.util.MD5Utils;
-import cn.gyyx.elves.util.mq.MessageProducer;
-import cn.gyyx.elves.util.mq.PropertyLoader;
-
-import cn.gyyx.openapi.enums.Errorcode;
-
-import com.alibaba.fastjson.JSON;
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.*;
 
 public class SecurityFilter implements Filter {
 	private static final Logger LOG = Logger.getLogger(SecurityFilter.class);
@@ -54,7 +38,9 @@ public class SecurityFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		Map<String, Object> map = new HashMap<String, Object>();
-		try {
+        System.out.println(request.getParameter("aaa"));
+        System.out.println(request.getCharacterEncoding());
+        try {
 			String signType  = request.getParameter("sign_type");
 			String sign      = request.getParameter("sign");
 			String timestamp = request.getParameter("timestamp");
@@ -62,10 +48,12 @@ public class SecurityFilter implements Filter {
 			if (StringUtils.isBlank(timestamp) || StringUtils.isBlank(signType)|| StringUtils.isBlank(sign)|| StringUtils.isBlank(authId)) {
 				//签名参数错误（timestamp/signType/sign/authId）
 				map.put("error", Errorcode.ERR401_1.getValue());
-			}else if (authId.length() != 16) {
-				//AuthID长度错误
-				map.put("error", Errorcode.ERR401_2.getValue());
-			}else if (!"md5".equalsIgnoreCase(signType)) {
+			}
+//			else if (authId.length() != 16) {
+//				//AuthID长度错误
+//				map.put("error", Errorcode.ERR401_2.getValue());
+//			}
+			else if (!"md5".equalsIgnoreCase(signType)) {
 				//signType类型错误
 				map.put("error", Errorcode.ERR401_3.getValue());
 			} else if (sign.length() != 32) {
@@ -162,8 +150,8 @@ public class SecurityFilter implements Filter {
 		}
 		sortUri.deleteCharAt(sortUri.length() - 1);
 		sortUri.append(authKey);
-		String signFinal = MD5Utils.MD5(sortUri.toString().trim());
-		LOG.debug("final sign str :" + sortUri + " signFinal:" + signFinal+ " sign:" + sign);
+        String signFinal = MD5Utils.MD5(sortUri.toString().trim());
+        LOG.debug("final sign str :" + sortUri + " signFinal:" + signFinal+ " sign:" + sign);
 		// 验签成功
 		if (sign.equalsIgnoreCase(signFinal)) {
 			LOG.debug("Sign Validate SCUUESS!");
@@ -178,5 +166,4 @@ public class SecurityFilter implements Filter {
 	@Override
 	public void destroy() {
 	}
-
 }

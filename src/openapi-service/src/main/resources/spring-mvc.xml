@@ -36,13 +36,14 @@
 	</mvc:annotation-driven>
 	 
 	<!-- 定义视图文件解析 -->
-	<bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
 
 	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+
+    <mvc:default-servlet-handler/>
 
 </beans>
 
