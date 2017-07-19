@@ -32,3 +32,4 @@ dependency-reduced-pom.xml
 *.idea  
 src/main/resources/conf.properties
 src/main/java/test/
+bin/

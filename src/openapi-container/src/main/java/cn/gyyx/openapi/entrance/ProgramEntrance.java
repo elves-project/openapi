@@ -34,7 +34,7 @@ public class ProgramEntrance {
         Server server = new Server(serverPort);
         WebAppContext context = new WebAppContext();
         context.setContextPath("/openapi");
-        context.setWar(path+"/src/openapi-service/target/service.war");
+        context.setWar(path+"/bin/service.war");
         server.setHandler(context);
         server.start();
         server.join();

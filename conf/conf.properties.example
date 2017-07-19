@@ -1,3 +1,6 @@
+#api server config
+server.port=9091
+
 #zookeeper config
 zookeeper.enabled=false
 zookeeper.host=127.0.0.1:2181
@@ -16,8 +19,6 @@ auth.mode = supervisor
 auth.id   = 1
 auth.key  = 123456    
 
-#server config
-server.port=12306
 
 #Elves-Center Module Config
 cron.enabled  = true

@@ -140,6 +140,7 @@
     </dependencies>
 
     <build>
+        <directory>../../bin</directory>
         <finalName>service</finalName>
         <resources>
             <resource>
