@@ -72,7 +72,8 @@ function build() {
     fi
     cd ..
     FILENAME=$(ls -l bin | grep release | awk '{print $NF}')
-    mv $FILENAME $app-$version-release.jar
+    version=$(ls -l bin | grep release | awk '{print $NF}' | awk -F '-' '{print $3}')
+    mv bin/$FILENAME bin/$app-$version-release.jar
     
 }
 

@@ -33,7 +33,7 @@ public class ProgramEntrance {
         int serverPort = Integer.parseInt(properties.getProperty("server.port"));
         Server server = new Server(serverPort);
         WebAppContext context = new WebAppContext();
-        context.setContextPath("/openapi");
+        context.setContextPath("/");
         context.setWar(path+"/bin/service.war");
         server.setHandler(context);
         server.start();
