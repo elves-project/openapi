@@ -38,8 +38,6 @@ public class SecurityFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		Map<String, Object> map = new HashMap<String, Object>();
-        System.out.println(request.getParameter("aaa"));
-        System.out.println(request.getCharacterEncoding());
         try {
 			String signType  = request.getParameter("sign_type");
 			String sign      = request.getParameter("sign");
