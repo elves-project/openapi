@@ -33,3 +33,4 @@ dependency-reduced-pom.xml
 src/main/resources/conf.properties
 src/main/java/test/
 bin/
+conf/conf.properties
