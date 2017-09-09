@@ -1,9 +1,12 @@
 package cn.gyyx.openapi.webservice;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import cn.gyyx.elves.util.ExceptionUtil;
+import cn.gyyx.elves.util.JsonFilter;
+import cn.gyyx.elves.util.mq.MessageProducer;
+import cn.gyyx.elves.util.mq.PropertyLoader;
+import cn.gyyx.openapi.enums.Errorcode;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.gyyx.elves.util.ExceptionUtil;
-import cn.gyyx.elves.util.mq.MessageProducer;
-import cn.gyyx.elves.util.mq.PropertyLoader;
-import cn.gyyx.openapi.enums.Errorcode;
-import cn.gyyx.openapi.filter.JsonFilter;
-
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/api/v2/info")
@@ -46,7 +44,7 @@ public class InfoWebService{
 		}catch(Exception e){
 			result.put("error", Errorcode.ERR500.getValue()+",openapi try/catch:"+ExceptionUtil.getStackTraceAsString(e));
 		}
-		return JSON.toJSONString(result,JsonFilter.filter);
+		return JSON.toJSONString(result, JsonFilter.filter);
 	}
 
 	

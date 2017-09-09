@@ -1,10 +1,10 @@
 package cn.gyyx.elves.util.mq;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @ClassName: ElvesMqMessage
@@ -33,11 +33,9 @@ public class ElvesMqMessage {
 	private String action;
 	
 	/*
-	 * mqtype: call.{directRoutingKey}/cast
+	 * mqtype: call/cast
 	 */
 	private String mqtype;
-	
-	private String directRoutingKey;
 	
 	/*
 	 * mqBody 可以为空，非空则是Map<String,Object>类型的参数集合
@@ -72,9 +70,6 @@ public class ElvesMqMessage {
 		this.fromModule = mqkey.split("[.]")[0];
 		this.toModule = mqkey.split("[.]")[1];
 		this.action = mqkey.split("[.]")[2];
-		if(!"cast".equals(mqtype)){
-			this.directRoutingKey =mqtype.split("[.]")[1];
-		}
 	}
 	
 
@@ -118,14 +113,6 @@ public class ElvesMqMessage {
 		this.mqtype = mqtype;
 	}
 
-	public String getDirectRoutingKey() {
-		return directRoutingKey;
-	}
-
-	public void setDirectRoutingKey(String directRoutingKey) {
-		this.directRoutingKey = directRoutingKey;
-	}
-
 	public Map<String, Object> getMqbody() {
 		return mqbody;
 	}
@@ -152,17 +139,10 @@ public class ElvesMqMessage {
 			}
 			
 			String mqtype = reqMsgMap.get("mqtype").toString().trim();
-			if(mqtype.startsWith("call")){
-				String[] arr2 = mqtype.split("[.]");
-				if(arr2.length!=2){
-					return false;
-				}
-			}else {
-				if(!"cast".equals(mqtype)){
-					return false;
-				}
+			if(!"call".equals(mqtype)&&!"cast".equals(mqtype)){
+                return false;
 			}
-			
+
 			if(null!=reqMsgMap.get("mqbody")){
 				JSON.parseObject(reqMsgMap.get("mqbody").toString().trim(),new TypeReference<Map<String, Object>>(){});
 			}

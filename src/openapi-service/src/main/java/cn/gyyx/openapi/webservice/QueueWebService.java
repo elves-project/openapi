@@ -1,10 +1,11 @@
 package cn.gyyx.openapi.webservice;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
+import cn.gyyx.elves.util.ExceptionUtil;
+import cn.gyyx.elves.util.JsonFilter;
+import cn.gyyx.elves.util.mq.MessageProducer;
+import cn.gyyx.openapi.enums.Errorcode;
+import cn.gyyx.openapi.util.ValidateUtil;
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,13 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cn.gyyx.elves.util.ExceptionUtil;
-import cn.gyyx.elves.util.mq.MessageProducer;
-import cn.gyyx.openapi.enums.Errorcode;
-import cn.gyyx.openapi.filter.JsonFilter;
-import cn.gyyx.openapi.util.ValidateUtil;
-
-import com.alibaba.fastjson.JSON;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/api/v2/queue")
