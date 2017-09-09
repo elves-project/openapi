@@ -116,7 +116,7 @@ public class CronWebService{
 		LOG.info("request /api/v2/cron/stop start");
 		Map<String,Object>  result = new HashMap<String, Object>();
 		result.put("flag", "false");
-		if(cron_id.length() != 16){
+		if(StringUtils.isBlank(cron_id)||cron_id.length() != 16){
 			result.put("error", Errorcode.ERR403_9.getValue());
 			return JSON.toJSONString(result, JsonFilter.filter);
 		}
@@ -139,7 +139,7 @@ public class CronWebService{
 		LOG.info("request /api/v2/cron/delete start");
 		Map<String,Object>  result = new HashMap<String, Object>();
 		result.put("flag", "false");
-		if(cron_id.length() != 16){
+		if(StringUtils.isBlank(cron_id)||cron_id.length() != 16){
 			result.put("error", Errorcode.ERR403_9.getValue());
 			return JSON.toJSONString(result, JsonFilter.filter);
 		}
@@ -162,7 +162,7 @@ public class CronWebService{
 		LOG.info("request /api/v2/cron/delete start");
 		Map<String,Object>  result = new HashMap<String, Object>();
 		result.put("flag", "false");
-		if(cron_id.length() != 16){
+		if(StringUtils.isBlank(cron_id)||cron_id.length() != 16){
 			result.put("error", Errorcode.ERR403_9.getValue());
 			return JSON.toJSONString(result, JsonFilter.filter);
 		}
