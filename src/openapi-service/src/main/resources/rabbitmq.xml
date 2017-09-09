@@ -8,17 +8,8 @@
      http://www.springframework.org/schema/rabbit
      http://www.springframework.org/schema/rabbit/spring-rabbit-1.3.xsd">
 
-
     <bean id="customConfigLoader" class="cn.gyyx.elves.util.CustomPropertyPlaceholderConfigurer"/>
 
-    <!--<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-           <list>  
-              <value>classpath:conf.properties</value>
-            </list>  
-        </property>  
-    </bean>-->
-    
 	<rabbit:connection-factory id="connectionFactory" channel-cache-size="10" username="${mq.user}" password="${mq.password}" host="${mq.ip}" port="${mq.port}" />
 		
 	<rabbit:admin connection-factory="connectionFactory"/>
@@ -26,12 +17,7 @@
 	<!--topic 匹配传输-->  
     <rabbit:template id="topicTemplate"  connection-factory="connectionFactory" exchange="elves"/>
 
-    <bean id="directTemplate" scope="prototype" class="org.springframework.amqp.rabbit.core.RabbitTemplate">
-        <property name="connectionFactory" ref="connectionFactory"/>
-        <property name="exchange" value="elves"/>
-    </bean>
-
-    <rabbit:queue name="openapi" durable="true" auto-delete="false" exclusive="false" />  
+    <rabbit:queue name="openapi" durable="true" auto-delete="false" exclusive="false" />
     
     <rabbit:topic-exchange name="${mq.exchange}">
         <rabbit:bindings> 
@@ -51,5 +37,4 @@
 		<property name ="maxPoolSize" value ="500" />
 		<property name ="queueCapacity" value ="500" />
 	</bean>
-	
 </beans>
