@@ -77,7 +77,18 @@ public class CronWebService{
 			mqrequest.put("timeout", StringUtils.isBlank(timeout)?90:Integer.parseInt(timeout));
 			mqrequest.put("proxy", proxy);
 			mqrequest.put("rule", rule);
-			result = messageProducer.call("openapi.cron","createCron", mqrequest, 5000);
+            Map<String,Object> back = messageProducer.call("openapi.cron","createCron", mqrequest, 5000);
+
+            if(null!=back&&null!=back.get("flag")&&"true".equals(back.get("flag").toString())){
+                Map<String,Object>  data = new HashMap<String, Object>();
+                data.put("id",back.get("id"));
+
+                result.put("flag","true");
+                result.put("error","");
+                result.put("result",data);
+            }else{
+                result.put("error",back.get("error"));
+            }
 		}catch(Exception e){
 			result.put("error", Errorcode.ERR500.getValue()+",openapi try/catch:"+ExceptionUtil.getStackTraceAsString(e));
 		}
